@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo-app</title>
+    <style>
+        body {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        .todo-container {
+            
+            max-width: 400px;
+            margin: 10px auto;
+            padding: 20px;
+            border: 1px solid black;
+            border-radius: 5px;
+        }
+
+        h1 {
+            text-align: center;
+            color: brown;
+        }
+
+        .input-container {
+            display: flex;
+            margin-top: 20px;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 10px;
+        }
+
+        button {
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0px;
+        }
+
+        li {
+            margin: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px;
+            border: 1px solid grey;
+            border-radius: 5px;
+        }
+
+        .completed {
+            text-decoration: line-through;
+            color: red;
+        }
+
+         button.delete{
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 4px 8px;
+            margin: 5px;
+        } 
+    </style>
+</head>
+
+<body>
+    <section class="todo-container">
+        <h1>Todo-App</h1>
+        <section class="input-container">
+            <input type="text" id="taskinput" placeholder="Add new task...">
+            <button onclick="addTask()">Add</button>
+
+        </section>
+        <ul id="taskList"></ul>
+
+    </section>
+
+    <script>
+        // ----function to add the task-------
+
+        var taskinput = document.getElementById('taskinput');
+
+        function addTask() {
+            const taskTest = taskinput.value.trim();
+            if (taskTest == "") return; //don't add empty task
+
+            const li = document.createElement('li');
+            li.innerHTML = `<span>${taskTest}</span>
+            <button onclick="taskCompletion(this)">Done</button>
+            <button onclick="taskEdit(this)">Edit</button>
+            <button class="delete" onclick="deleteTask(this)">Delete</button>
+            `;
+
+            document.getElementById('taskList').appendChild(li);
+            taskinput.value = ""
+
+        }
+        // -------function to toggle taskCompletion-------
+
+        function taskCompletion(button) {
+            const task = button.parentElement;
+            task.classList.toggle('completed')  //complted is the classlist from styletag
+
+        }
+
+        // ----------function for taskEdit---------------
+
+        function taskEdit(button) {
+
+            const task = button.parentElement;
+            const span = task.querySelector("span")
+
+            const newText = prompt("todo-app", span.textContent);
+
+            if (newText !== null) {
+                span.textContent = newText;
+            }
+
+        }
+
+        // ------function for delete--------
+
+        function deleteTask(button) {
+            const task = button.parentElement;
+            task.remove();
+        }
+    </script>
+</body>
+
+</html>
